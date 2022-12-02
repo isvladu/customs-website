@@ -1,6 +1,7 @@
-from sqlalchemy import Column, String, Integer
+from marshmallow import Schema, fields
+from sqlalchemy import Column, Integer, String
 
-from .entity import Entity, Base
+from .entity import Base, Entity
 
 
 class Match(Entity, Base):
@@ -45,3 +46,21 @@ class Match(Entity, Base):
         self.player_7 = player_7
         self.player_8 = player_8
         self.player_9 = player_9
+
+
+class MatchSchema(Schema):
+    id = fields.Number()
+    match_id = fields.Number()
+    player_0 = fields.Str()
+    player_1 = fields.Str()
+    player_2 = fields.Str()
+    player_3 = fields.Str()
+    player_4 = fields.Str()
+    player_5 = fields.Str()
+    player_6 = fields.Str()
+    player_7 = fields.Str()
+    player_8 = fields.Str()
+    player_9 = fields.Str()
+    created_at = fields.DateTime()
+    updated_at = fields.DateTime()
+    last_updated_by = fields.Str()
