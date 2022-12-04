@@ -6,23 +6,19 @@ import { Match } from './matches/match.model';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.css'],
 })
 export class AppComponent implements OnInit, OnDestroy {
   title = 'app';
   matchesListSubs!: Subscription;
   matchesList!: Match[];
 
-  constructor(private matchesApi: MatchesApiService) {
-
-  }
+  constructor(private matchesApi: MatchesApiService) {}
 
   ngOnInit(): void {
-    this.matchesListSubs = this.matchesApi.getMatches().subscribe(res => {
+    this.matchesListSubs = this.matchesApi.getMatches().subscribe((res) => {
       this.matchesList = res;
-    },
-      console.error
-    );
+    }, console.error);
   }
 
   ngOnDestroy(): void {
