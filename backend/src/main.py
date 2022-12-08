@@ -3,6 +3,7 @@ from flask_cors import CORS
 
 from .entities.entity import Base, Session, engine
 from .entities.match import Match, MatchSchema
+from .auth import AuthError, requires_auth
 
 app = Flask(__name__)
 CORS(app)
@@ -24,6 +25,7 @@ def get_matches():
 
 
 @app.route("/matches", methods=["POST"])
+@requires_auth
 def add_match():
     posted_match = MatchSchema(
         only=(
@@ -51,3 +53,11 @@ def add_match():
     session.close()
 
     return jsonify(new_match), 201
+
+
+@app.errorhandler(AuthError)
+def handle_auth_error(ex):
+    response = jsonify(ex.error)
+    response.status_code = ex.status_code
+
+    return response
